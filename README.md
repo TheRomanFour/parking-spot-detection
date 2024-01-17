@@ -26,6 +26,5 @@ In the project there are 2 models, premade yolo model and one trained on the cus
 
 - `templates/`: HTML templates for rendering web pages (e.g., index.html).
 
-- `static/`: Static files such as stylesheets or images for the web interface.
-
-- `test_arial_cam.py`: Main Python script running the Flask web application and performing object detection.
+- `run_coco_model.py/` : Runs the script on desired video with premade coco model
+- `run_my_model.py/` : Runs the script on desired video with our own model
