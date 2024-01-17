@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detekcija parkirnih mjesta</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detekcija parkirnih mjesta</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        #content-container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%; 
+            margin: 0 auto;
+        }
+
+        #video-container {
+            flex: 1;
+            margin-right: 20px;
+            margin-top: 25px;
+        }
+
+        #parking-container {
+            flex: 1;
+        }
+
+        #parking-table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        #parking-table th,
+        #parking-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #parking-table th {
+            background-color: #f2f2f2;
+        }
+
+        #log-container {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content-container">
+        <div id="video-container">
+            <img id="video-feed" src="{{ url_for('video_feed') }}" width="640" height="480">
+        </div>
+        <div id="parking-container">
+            <h2>Parking Spaces</h2>
+            <table id="parking-table">
+                <tr>
+                    <th>Parking Space</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td>Parking Space 1</td>
+                    <td>Occupied</td>
+                </tr>
+            </table>
+            <div id="log-container">
+                <h2>Log</h2>
+                <pre id="log-content"></pre>
+                {% if change_log %}
+                <h2>Change Log:</h2>
+                <ul>
+                    {% for log_entry in change_log %}
+                    <li>{{ log_entry }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateTable() {
+            $.get("/update_table", function(data) {
+                $("#parking-table").html(data.table_html);
+            });
+        }
+
+        function updateLog() {
+        $.get("/read_log", function(data) {
+            $("#log-content").html(data.log_content);
+        });
+    }
+        // Update interval
+        setInterval(updateTable, 2000);
+        setInterval(updateLog, 5000);
+    </script>
+
+</body>
+
+</html>
