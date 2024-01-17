@@ -62,7 +62,7 @@ def onkeypress(event):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--video_path', help="Path of video file", default='D:\\Projekti\\parking spot detection\\videji\\parking1.mp4')
+    parser.add_argument('--video_path', help="Path of video file", default='videji\parking1.mp4')
     parser.add_argument('--out_file', help="Name of the output file", default="regions.p")
     args = parser.parse_args()
 

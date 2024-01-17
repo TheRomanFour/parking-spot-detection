@@ -1,17 +1,18 @@
 import cv2
 from ultralytics import YOLO
 
-# Load your YOLOv8 model
+
+# izaberi koje model  (homemade model ima samo jednu klasu pa će pokazivati samo aute, ali ce pisati da su ljudi)
+
 model = YOLO('yolov8s.pt')
+model = YOLO('best_homemade.pt')
+
 # Define class IDs
 CAR_CLASS = 2
 HUMAN_CLASS = 0
 BOAT_CLASS = 8
 
 #cap = cv2.VideoCapture('D:\Projekti\parking spot detection\parking1.mp4')
-
-
-
 cap = cv2.VideoCapture(r'D:\Projekti\parking spot detection\videji\ispod_kuce.mp4')
 
 
@@ -25,7 +26,7 @@ while True:
 
     # Perform inference with your YOLOv8 model
     results = model.predict(frame)
-    pred = results[0].boxes.boxes
+    pred = results[0].boxes.data
 
     for det in pred:
         class_id, confidence, x_min, y_min, x_max, y_max = int(det[5]), det[4], det[0], det[1], det[2], det[3]
